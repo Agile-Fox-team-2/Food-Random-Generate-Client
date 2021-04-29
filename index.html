@@ -15,7 +15,7 @@
   <!-- Nav Bar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand">Random Food Generator</a>
+      <h4 style="color: rgb(162, 162, 162)">Random Food Generator</h4>
       <button
         class="navbar-toggler"
         type="button"
@@ -115,6 +115,46 @@
     </div>
   </div>
   <!-- login form -->
+
+  <!-- list food -->
+  <div id="" class="container mb-3 mt-3 justify-content-center align-items-center"
+  style="background-color: #fff; box-shadow: 0 0 5px 5px rgba(0, 0, 0, .05);">
+    <div style="padding: 20px;">
+      <table class="table" style="box-shadow: 0 0 5px 5px rgba(0, 0, 0, .05); overflow-y: scroll; max-height: 70%;">
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Title</th>
+            <th scope="col">Source URL</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td scope="row">1</td>
+            <td>Ayam kampung goreng</td>
+            <td><a href="www.google.com" style="text-decoration: none;">www.google.com</a></td>
+            <td><a onclick="deleteFood(foodId)"><i class="fas fa-trash" style="color: rgb(255, 113, 113); cursor: pointer;"></i></a></td>
+          </tr>
+          <tr>
+            <td scope="row">2</td>
+            <td>Ayam kampung kukus</td>
+            <td><a href="www.facebook.com" style="text-decoration: none;">www.facebook.com</a></td>
+            <td><a onclick="deleteFood(foodId)"><i class="fas fa-trash" style="color: rgb(255, 113, 113); cursor: pointer;"></i></a></td>
+
+          </tr>
+          <tr>
+            <td scope="row">3</td>
+            <td>Ayam kampung bakar</td>
+            <td><a href="www.twitter.com"style="text-decoration: none;">www.twitter.com</a></td>
+            <td><a onclick="deleteFood(foodId)"><i class="fas fa-trash" style="color: rgb(255, 113, 113); cursor: pointer;"></i></a></td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- list food -->
 
   <!-- random food -->
   <div class="container">

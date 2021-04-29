@@ -91,3 +91,22 @@ li {
   padding: 5px;
 
 }
+
+th {
+  background-color: #00ac96;
+  color: #fff;
+}
+
+tr:hover {
+  background-color: #00ac96;
+  color: #fff;
+}
+
+a:hover {
+  background-color: #00ac96;
+  color: #fff;
+}
+
+th, td {
+  text-align: center;
+}
