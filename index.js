@@ -1,6 +1,10 @@
 $(document).ready(() => {
+	checkIsLoggedIn();
+
 	$("#navRegister").click((e) => {
 		e.preventDefault();
+		$("#navRegister").hide();
+		$("#navLogin").show();
 		$("#login").hide();
 		$("#register").show();
 		$("#foodList").hide();
@@ -12,6 +16,8 @@ $(document).ready(() => {
 
 	$("#navLogin").click((e) => {
 		e.preventDefault();
+		$("#navRegister").show();
+		$("#navLogin").hide();
 		$("#login").show();
 		$("#register").hide();
 		$("#todoList").hide();
@@ -47,7 +53,7 @@ const checkIsLoggedIn = () => {
 
 		getFoods();
 	} else {
-		$("#navLogin").show();
+		$("#navLogin").hide();
 		$("#navLogout").hide();
 		$("#navRegister").show();
 
@@ -70,6 +76,7 @@ const register = () => {
 	let lastName = $("#lastNameRegister").val();
 	let email = $("#emailRegister").val();
 	let password = $("#passwordRegister").val();
+	console.log(firstName, lastName, email, password);
 
 	$.ajax({
 		method: "POST",
