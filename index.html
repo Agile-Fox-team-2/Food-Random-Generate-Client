@@ -12,32 +12,70 @@
 </head>
 <body>
 
+  <!-- Nav Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand">Random Food Generator</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="" style="margin-right: auto"></ul>
+        <ul class="navbar-nav mb-2 mb-lg-0" style="margin-left: auto; margin-right: 0">
+          <!-- <li class="nav-item" id="list-nav">
+            <a class="nav-link active" aria-current="page" href="#">List</a>
+          </li> -->
+          <li class="nav-item" id="navLogin">
+            <a class="nav-link" href=""><i class="fas fa-sign-in-alt"></i> Log In</a
+            >
+          </li>
+          <li class="nav-item" id="navLogout">
+            <a class="nav-link" href=""><i class="fas fa-sign-out-alt"></i> Log Out</a
+            >
+          </li>
+          <li class="nav-item" id="navRegister">
+            <a class="nav-link" href=""><i class="fas fa-user-plus"></i> Register</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>	
+  <!-- Nav Bar -->
+
   <!-- register form -->
-  <div class="container">
+  <div id="register" class="container">
     <div class="row content">
       <div class="col-md-6 mb-3">
         <img src="assets/register.svg" alt="register image" class="img-fluid">
       </div>
       <div class="col-md-6">
         <h3 class="register-text mb-3">Register</h3>
-        <form>
+        <form id="form-register">
           <div class="form-group">
-            <input type="text" name="firstName" id="firstName" placeholder="Your First Name" class="form-control">
+            <input type="text" name="firstName" id="firstNameRegister" placeholder="Your First Name" class="form-control">
           </div>
           <div class="form-group">
-            <input type="text" name="lastName" id="lastName" placeholder="Your Last Name" class="form-control">
+            <input type="text" name="lastName" id="lastNameRegister" placeholder="Your Last Name" class="form-control">
           </div>
           <div class="form-group">
-            <input type="email" name="email" id="email" placeholder="Your Email" class="form-control">
+            <input type="email" name="email" id="emailRegister" placeholder="Your Email" class="form-control">
           </div>
           <div class="form-group">
-            <input type="password" name="password" id="password" placeholder="Your Password" class="form-control">
+            <input type="password" name="password" id="passwordRegister" placeholder="Your Password" class="form-control">
           </div>
           <!-- <div class="form-group form-check">
             <input type="checkbox" name="checkbox" class="form-check-input" id="checkbox" class="form-control">
             <label for="checkbox" class="form-check-label">Remember Me</label>
           </div> -->
-          <button class="btn btn-class">Register</button>
+          <button class="btn btn-class" type="submit">Register</button>
         </form>
       </div>
     </div>
@@ -45,14 +83,14 @@
   <!-- register form -->
 
   <!-- login form -->
-  <div class="container">
+  <div id="login" class="container">
     <div class="row content">
       <div class="col-md-6 mb-3">
         <img src="assets/login.svg" alt="login image" class="img-fluid">
       </div>
       <div class="col-md-6">
         <h3 class="login-text mb-3">Log In</h3>
-        <form>
+        <form id="form-login">
           <!-- <div class="form-group">
             <input type="text" name="firstName" id="firstName" placeholder="Your First Name" class="form-control">
           </div>
@@ -60,16 +98,16 @@
             <input type="text" name="lastName" id="lastName" placeholder="Your Last Name" class="form-control">
           </div> -->
           <div class="form-group">
-            <input type="email" name="login-email" id="login-email" placeholder="Your Email" class="form-control">
+            <input type="email" name="login-email" id="emailLogin" placeholder="Your Email" class="form-control">
           </div>
           <div class="form-group">
-            <input type="password" name="login-password" id="login-password" placeholder="Your Password" class="form-control">
+            <input type="password" name="login-password" id="passwordLogin" placeholder="Your Password" class="form-control">
           </div>
           <div class="form-group form-check">
             <input type="checkbox" name="checkbox" class="form-check-input" id="checkbox" class="form-control">
             <label for="checkbox" class="form-check-label">Remember Me</label>
           </div>
-          <button class="btn btn-class">Log In</button>
+          <button class="btn btn-class" type="submit">Log In</button>
           <p class="text-left" style="padding-top: 15px;">or</p>
           <div class="g-signin2" data-onsuccess="onSignIn" data-theme="light" data-longtitle="true"></div>
         </form>
@@ -78,9 +116,67 @@
   </div>
   <!-- login form -->
 
+  <!-- random food -->
+  <div class="container">
+    <div class="row-content">
+      <div class="col d-flex justify-content-center">
+        <div class="card">
+          <img src="https://spoonacular.com/recipeImages/642660-556x370.jpg" alt="Fennel and Orange Salad With Toasted Hazelnuts and Cranberries" class="card-img-top" style="padding-top: 30px;">
+          <div class="card-body">
+            <h5 class="card-title" style="text-align: center; padding-top: 10px;">Fennel and Orange Salad With Toasted Hazelnuts and Cranberries</h5>
+            <div class="card-after-title">
+              <div>
+                <label for="servings">
+                  Servings:
+                  <!-- ambil value serving aja -->
+                  <h6 class="card-servings">4 servings</h6>
+                </label>
+              </div>
+              <div>
+                <label for="diets">
+                  Diets:
+                  <!-- ambil values dari Diets, diolah agar tanpa tanda petik dan spasi setelah koma -->
+                  <h6 class="card-diets">Gluten free, dairy free, paleolithic, lacto ovo vegetarian, primal, vegan</h6>
+                </label>
+              </div>
+              <div>
+                <!-- ambil value ingredients, equipment, dan instruction dari analyzedInstruction -->
+                <label for="ingredients">
+                  Ingredients:
+                    <!-- ambil name ingredients dari tiap steps nya, di join -->
+                    <h6>orange, fennel bulb, olive oil, vinegar, pepper, salt, hazelnuts, toast, vinaigrette, fennel, dried cranberries</h6>
+                </label>
+              </div>
+              <div>
+                <label for="instruction">
+                  Instruction:
+                  <h6>
+                    <ol>
+                      <!-- ambil value step dari steps -->
+                      <li>Finely grate enough zest from the orange to measure 1/2 tablespoon.</li>
+                      <li>Cut peel, including all white pith, from the orange with a paring knife. Then cut segments free from membranes.</li>
+                      <li>Cut out and discard core of fennel bulb, then cut bulbs crosswise into very thin slices, as thin as you can get them.</li>
+                      <li>Whisk together vinegar, zest, salt, and pepper in a small bowl until salt is dissolved, then add olive oil slowly in a stream, whisking until combined well.</li>
+                      <li>Toast hazelnuts on medium heat on a dry skillet.</li>
+                      <li>Toss fennel and oranges with vinaigrette in a large bowl until combined well.</li>
+                      <li>Top with toasted hazelnuts and dried cranberries.</li>
+                      <li>Garnish with a few fennel fronds.</li>
+                    </ol>
+                  </h6>
+                </label>
+              </div>
+            </div>
+            <button class="btn btn-class" style="float:right">go somewhere</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- random food -->
+
   <script src="https://apis.google.com/js/platform.js" async defer></script>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="index.html"></script>
+  <script src="index.js"></script>
 </body>
 </html>
