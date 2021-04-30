@@ -243,28 +243,31 @@ const generateFood = (e) => {
 			const foodContainer = $("#foodContainer");
 			foodContainer.empty();
 			foodContainer.append(`
-			<div class="row-content">
-				<div class="col d-flex justify-content-center">
-					<div class="card">
-						<img
-							src="${image}"
-							alt="Fennel and Orange Salad With Toasted Hazelnuts and Cranberries"
-							class="card-img-top"
-							style="padding-top: 30px"
-						/>
+				<div class="row-content">
+					<div class="d-flex justify-content-center">
+						<div class="card">
+							<div class="d-flex justify-content-center align-items-center" style="margin: 10px; padding: 10px;">
+								<button onclick="generateFood()" class="btn btn-class">Random Food</button>
+							</div>
+							<img
+								src="${image}"
+								alt="Fennel and Orange Salad With Toasted Hazelnuts and Cranberries"
+								class="card-img-top"
+							/>
 						<div class="card-body">
 							<h5
 								class="card-title"
-								style="text-align: center; padding-top: 10px"
+								style="text-align: center; padding-top: 10px; font-weight: 600;"
 							>
 								${title}
+								<a href="${sourceUrl}" style="text-decoration: none; font-weight: 100 !important; font-size: small;">${sourceUrl}</a>
 							</h5>
 							<div class="card-after-title">
 								<div>
 									<label for="servings">
 										Servings:
 										<!-- ambil value serving aja -->
-										<h6 class="card-servings">4 servings</h6>
+										<h6 class="card-servings">${servings} servings</h6>
 									</label>
 								</div>
 								<div>
