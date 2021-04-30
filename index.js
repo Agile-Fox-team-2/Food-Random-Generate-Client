@@ -109,9 +109,14 @@ const register = () => {
 			checkIsLoggedIn();
 		})
 		.fail((err) => {
-			const errors = err.responseJSON.errorMessages;
-			console.log(errors);
-			// console.log(errors.join(", "));
+			const { errors } = err.responseJSON;
+			Toastify({
+				text: errors.join(", "),
+				gravity: "top",
+				position: "left",
+				backgroundColor: "#ff7171",
+				duration: 3000,
+			}).showToast();
 		});
 };
 
@@ -134,8 +139,14 @@ const login = () => {
 			$("#passwordLogin").val("");
 		})
 		.fail((err) => {
-			const errors = err.responseJSON.errorMessages;
-			// console.log(errors.join(", "));
+			const { errors } = err.responseJSON;
+			Toastify({
+				text: errors.join(", "),
+				gravity: "top",
+				position: "left",
+				backgroundColor: "#ff7171",
+				duration: 3000,
+			}).showToast();
 		})
 		.always(() => {
 			checkIsLoggedIn();
@@ -197,7 +208,16 @@ const displayFoods = () => {
 			});
 			foodContainer.append();
 		})
-		.fail((err) => console.log(err))
+		.fail((err) => {
+			const { errors } = err.responseJSON;
+			Toastify({
+				text: errors.join(", "),
+				gravity: "top",
+				position: "left",
+				backgroundColor: "#ff7171",
+				duration: 3000,
+			}).showToast();
+		})
 		.always((_) => {
 			$(".food-del-btn").on("click", deleteFood);
 		});
@@ -347,6 +367,19 @@ const sendFood = () => {
 			food_url: food_url.attr("href"),
 		},
 	})
+		.done(() => {
+			console.log("berhasil");
+		})
+		.fail((err) => {
+			const { errors } = err.responseJSON;
+			Toastify({
+				text: errors.join(", "),
+				gravity: "top",
+				position: "left",
+				backgroundColor: "#ff7171",
+				duration: 3000,
+			}).showToast();
+		})
 		.done((data) => {
 			console.log(title.val());
 			console.log(data);
