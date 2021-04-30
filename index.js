@@ -364,7 +364,7 @@ const sendFood = () => {
 			access_token: localStorage.getItem("access_token"),
 		},
 		data: {
-			title: title.val(),
+			title: title.attr("name"),
 			food_url: food_url.attr("href"),
 		},
 	})
