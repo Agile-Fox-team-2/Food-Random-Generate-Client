@@ -155,6 +155,7 @@ const login = () => {
 
 const logout = () => {
 	localStorage.removeItem("access_token");
+	signOut();
 	checkIsLoggedIn();
 };
 
@@ -273,7 +274,7 @@ const generateFood = (e) => {
 			});
 			let ingredients = [];
 			analyzedInstructions[0].steps.forEach((e) => {
-				ingredients.push(`${e.ingredients[0].name}`);
+				if (e.ingredients[0]) ingredients.push(`${e.ingredients[0].name}`);
 			});
 			const foodContainer = $("#foodContainer");
 			foodContainer.empty();
