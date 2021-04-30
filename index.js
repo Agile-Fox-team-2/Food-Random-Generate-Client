@@ -28,10 +28,10 @@ $(document).ready(() => {
 		logout();
 	});
 
-	$("#navFavorit").click((e) => {
-		e.preventDefault();
-		$('#foodList')
-	});
+	// $("#navFavorit").click((e) => {
+	// 	e.preventDefault();
+	// 	$('#foodList')
+	// });
 
 	$("#form-login").on("submit", (e) => {
 		e.preventDefault();
@@ -49,12 +49,12 @@ const checkIsLoggedIn = () => {
 		$("#navLogin").hide();
 		$("#navLogout").show();
 		$("#navRegister").hide();
-		$("#navFavorite").show();
-		$("#navRandom").show();
+		// $("#navFavorite").show();
+		// $("#navRandom").show();
 
 		$("#login").hide();
 		$("#register").hide();
-		$("#foodList").show();
+		// $("#foodList").show();
 		$("#foodContainer").show();
 
 		getFoods();
@@ -63,12 +63,12 @@ const checkIsLoggedIn = () => {
 		$("#navLogin").hide();
 		$("#navLogout").hide();
 		$("#navRegister").show();
-		$("#navFavorite").hide();
-		$("#navRandom").hide();
+		// $("#navFavorite").hide();
+		// $("#navRandom").hide();
 
 		$("#login").show();
 		$("#register").hide();
-		$("#foodList").hide();
+		// $("#foodList").hide();
 		$("#foodContainer").hide();
 		$("#firstNameRegister").val("");
 		$("#lastNameRegister").val("");
