@@ -50,8 +50,10 @@ const checkIsLoggedIn = () => {
 		$("#login").hide();
 		$("#register").hide();
 		$("#foodList").show();
+		$("#foodContainer").show();
 
 		getFoods();
+		generateFood();
 	} else {
 		$("#navLogin").hide();
 		$("#navLogout").hide();
@@ -60,6 +62,7 @@ const checkIsLoggedIn = () => {
 		$("#login").show();
 		$("#register").hide();
 		$("#foodList").hide();
+		$("#foodContainer").hide();
 		$("#firstNameRegister").val("");
 		$("#lastNameRegister").val("");
 		$("#emailRegister").val("");
@@ -210,7 +213,7 @@ const deleteFood = (e) => {
 };
 
 const generateFood = (e) => {
-	e.preventDefault();
+	if (e) e.preventDefault();
 	$.ajax({
 		type: "GET",
 		url: "http://localhost:3000/foods/random",
@@ -219,10 +222,90 @@ const generateFood = (e) => {
 		},
 	})
 		.done((data) => {
-			const foodContainer = $("#food-cotainer");
+			const {
+				analyzedInstructions,
+				image,
+				servings,
+				sourceUrl,
+				title,
+				diets,
+			} = data;
+			console.log(analyzedInstructions);
+			let instructionHtml = "";
+			analyzedInstructions[0].steps.forEach((instruction) => {
+				instructionHtml += `
+				<li>
+					${instruction.step}
+				</li>
+				`;
+			});
+			console.log(instructionHtml);
+			const foodContainer = $("#foodContainer");
 			foodContainer.empty();
 			foodContainer.append(`
-      
+			<div class="row-content">
+				<div class="col d-flex justify-content-center">
+					<div class="card">
+						<img
+							src="${image}"
+							alt="Fennel and Orange Salad With Toasted Hazelnuts and Cranberries"
+							class="card-img-top"
+							style="padding-top: 30px"
+						/>
+						<div class="card-body">
+							<h5
+								class="card-title"
+								style="text-align: center; padding-top: 10px"
+							>
+								${title}
+							</h5>
+							<div class="card-after-title">
+								<div>
+									<label for="servings">
+										Servings:
+										<!-- ambil value serving aja -->
+										<h6 class="card-servings">4 servings</h6>
+									</label>
+								</div>
+								<div>
+									<label for="diets">
+										Diets:
+										<!-- ambil values dari Diets, diolah agar tanpa tanda petik dan spasi setelah koma -->
+										<h6 class="card-diets">
+											${diets}
+										</h6>
+									</label>
+								</div>
+								<div>
+									<!-- ambil value ingredients, equipment, dan instruction dari analyzedInstruction -->
+									<label for="ingredients">
+										Ingredients:
+										<!-- ambil name ingredients dari tiap steps nya, di join -->
+										<h6>
+											orange, fennel bulb, olive oil, vinegar, pepper, salt,
+											hazelnuts, toast, vinaigrette, fennel, dried cranberries
+										</h6>
+									</label>
+								</div>
+								<div>
+									<label for="instruction">
+										Instruction:
+										<h6>
+											<ol>
+												<!-- ambil value step dari steps -->
+												${instructionHtml}
+											</ol>
+										</h6>
+									</label>
+								</div>
+							</div>
+							<button class="btn btn-class" style="float: right">
+								Send to email
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
       `);
 		})
 		.fail((err) => console.log(err));
