@@ -106,8 +106,15 @@ const register = () => {
 			checkIsLoggedIn();
 		})
 		.fail((err) => {
-			const errors = err.responseJSON.errorMessages;
-			// console.log(errors.join(", "));
+			const { errors } = err.responseJSON;
+			Toastify({
+				text: errors.join(', '),
+				gravity: "top",
+				position: "left",
+				backgroundColor: "#ff7171",
+				duration: 3000
+			})
+				.showToast();
 		});
 };
 
@@ -130,8 +137,15 @@ const login = () => {
 			$("#passwordLogin").val("");
 		})
 		.fail((err) => {
-			const errors = err.responseJSON.errorMessages;
-			// console.log(errors.join(", "));
+			const { errors } = err.responseJSON;
+			Toastify({
+				text: errors.join(', '),
+				gravity: "top",
+				position: "left",
+				backgroundColor: "#ff7171",
+				duration: 3000
+			})
+				.showToast();
 		})
 		.always(() => {
 			checkIsLoggedIn();
@@ -193,7 +207,17 @@ const displayFoods = () => {
 			});
 			foodContainer.append();
 		})
-		.fail((err) => console.log(err))
+		.fail((err) => {
+			const { errors } = err.responseJSON;
+			Toastify({
+				text: errors.join(', '),
+				gravity: "top",
+				position: "left",
+				backgroundColor: "#ff7171",
+				duration: 3000
+			})
+				.showToast();
+		})
 		.always((_) => {
 			$(".food-del-btn").on("click", deleteFood);
 		});
@@ -347,7 +371,15 @@ const sendFood = () => {
 		console.log('berhasil');
 	})
 	.fail(err => {
-		console.log(err);
+		const { errors } = err.responseJSON;
+		Toastify({
+			text: errors.join(', '),
+			gravity: "top",
+			position: "left",
+			backgroundColor: "#ff7171",
+			duration: 3000
+		})
+			.showToast();
 	})
 }
 
@@ -377,6 +409,14 @@ function onSignUp(googleUser) {
     .fail((err) => {
       const errors = err.responseJSON.errorMessages;
       // swal("Registration Failed", errors.join(', '), "error");
+			Toastify({
+				text: errors.join(', '),
+				gravity: "top",
+				position: "left",
+				backgroundColor: "#ff7171",
+				duration: 3000
+			})
+				.showToast();
     })
 }
 
@@ -404,6 +444,14 @@ function onSignIn(googleUser) {
     .fail((err) => {
       const errors = err.responseJSON.errorMessages;
       // swal("Google login failed", errors.join(', '), "error");
+			Toastify({
+				text: errors.join(', '),
+				gravity: "top",
+				position: "left",
+				backgroundColor: "#ff7171",
+				duration: 3000
+			})
+				.showToast();
     })
     .always(() => {
       checkIsLoggedIn();
