@@ -259,7 +259,7 @@ const generateFood = (e) => {
 								class="card-title"
 								style="text-align: center; padding-top: 10px; font-weight: 600;"
 							>
-								${title}
+								${title} <br>
 								<a href="${sourceUrl}" style="text-decoration: none; font-weight: 100 !important; font-size: small;">${sourceUrl}</a>
 							</h5>
 							<div class="card-after-title">
