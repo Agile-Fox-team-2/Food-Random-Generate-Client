@@ -7,7 +7,6 @@ $(document).ready(() => {
 		$("#navLogin").show();
 		$("#login").hide();
 		$("#register").show();
-		$("#foodList").hide();
 		$("#firstNameRegister").val("");
 		$("#lastNameRegister").val("");
 		$("#emailRegister").val("");
@@ -20,7 +19,6 @@ $(document).ready(() => {
 		$("#navLogin").hide();
 		$("#login").show();
 		$("#register").hide();
-		$("#todoList").hide();
 		$("#emailLogin").val("");
 		$("#passwordLogin").val("");
 	});
@@ -29,6 +27,11 @@ $(document).ready(() => {
 		e.preventDefault();
 		logout();
 	});
+
+	// $("#navFavorit").click((e) => {
+	// 	e.preventDefault();
+	// 	$('#foodList')
+	// });
 
 	$("#form-login").on("submit", (e) => {
 		e.preventDefault();
@@ -46,10 +49,12 @@ const checkIsLoggedIn = () => {
 		$("#navLogin").hide();
 		$("#navLogout").show();
 		$("#navRegister").hide();
+		// $("#navFavorite").show();
+		// $("#navRandom").show();
 
 		$("#login").hide();
 		$("#register").hide();
-		$("#foodList").show();
+		// $("#foodList").show();
 		$("#foodContainer").show();
 
 		getFoods();
@@ -58,10 +63,12 @@ const checkIsLoggedIn = () => {
 		$("#navLogin").hide();
 		$("#navLogout").hide();
 		$("#navRegister").show();
+		// $("#navFavorite").hide();
+		// $("#navRandom").hide();
 
 		$("#login").show();
 		$("#register").hide();
-		$("#foodList").hide();
+		// $("#foodList").hide();
 		$("#foodContainer").hide();
 		$("#firstNameRegister").val("");
 		$("#lastNameRegister").val("");
@@ -231,6 +238,7 @@ const generateFood = (e) => {
 				diets,
 			} = data;
 			console.log(analyzedInstructions);
+			console.log(analyzedInstructions[0].steps[0].ingredients[0].name)
 			let instructionHtml = "";
 			analyzedInstructions[0].steps.forEach((instruction) => {
 				instructionHtml += `
@@ -239,6 +247,10 @@ const generateFood = (e) => {
 				</li>
 				`;
 			});
+			let ingredients = [];
+			analyzedInstructions[0].steps.forEach((e) => {
+				ingredients.push(`${e.ingredients[0].name}`);
+			})
 			console.log(instructionHtml);
 			const foodContainer = $("#foodContainer");
 			foodContainer.empty();
@@ -285,8 +297,7 @@ const generateFood = (e) => {
 										Ingredients:
 										<!-- ambil name ingredients dari tiap steps nya, di join -->
 										<h6>
-											orange, fennel bulb, olive oil, vinegar, pepper, salt,
-											hazelnuts, toast, vinaigrette, fennel, dried cranberries
+											${ingredients.join(', ')}
 										</h6>
 									</label>
 								</div>
@@ -302,7 +313,7 @@ const generateFood = (e) => {
 									</label>
 								</div>
 							</div>
-							<button class="btn btn-class" style="float: right">
+							<button onclick="sendFood()" class="btn btn-class" style="float: right">
 								Send to email
 							</button>
 						</div>
@@ -313,6 +324,22 @@ const generateFood = (e) => {
 		})
 		.fail((err) => console.log(err));
 };
+
+const sendFood = () => {
+	$.ajax({
+		method: 'POST',
+		url: 'http://localhost:3000/sendfood',
+		headers: {
+			access_token: localStorage.getItem("access_token")
+		}
+	})
+	.done(() => {
+		console.log('berhasil');
+	})
+	.fail(err => {
+		console.log(err);
+	})
+}
 
 function onSignUp(googleUser) {
 	const id_token = googleUser.getAuthResponse().id_token;
