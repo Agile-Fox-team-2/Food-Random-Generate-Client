@@ -268,12 +268,13 @@ const generateFood = (e) => {
 							/>
 						<div class="card-body">
 							<h5
+								id="title-val"
 								class="card-title"
 								style="text-align: center; padding-top: 10px; font-weight: 600;"
 							>
 								${title} <br>
-								<a href="${sourceUrl}" style="text-decoration: none; font-weight: 100 !important; font-size: small;">${sourceUrl}</a>
 							</h5>
+							<a id="url-val" href="${sourceUrl}" style="text-decoration: none; font-weight: 100 !important; font-size: small;">${sourceUrl}</a>
 							<div class="card-after-title">
 								<div>
 									<label for="servings">
@@ -326,11 +327,20 @@ const generateFood = (e) => {
 };
 
 const sendFood = () => {
+	const title = $('#title-val');
+	const food_url = $('#url-val');
+
+	console.log(title, food_url);
+
 	$.ajax({
 		method: 'POST',
-		url: 'http://localhost:3000/sendfood',
+		url: 'http://localhost:3000/foods/sendfood',
 		headers: {
 			access_token: localStorage.getItem("access_token")
+		},
+		data: {
+			title: title.val(),
+			food_url: food_url.attr("href"),
 		}
 	})
 	.done(() => {
