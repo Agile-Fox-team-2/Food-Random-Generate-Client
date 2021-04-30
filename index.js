@@ -100,7 +100,7 @@ const register = () => {
 		})
 		.fail((err) => {
 			const errors = err.responseJSON.errorMessages;
-			console.log(errors.join(", "));
+			// console.log(errors.join(", "));
 		});
 };
 
@@ -124,7 +124,7 @@ const login = () => {
 		})
 		.fail((err) => {
 			const errors = err.responseJSON.errorMessages;
-			console.log(errors.join(", "));
+			// console.log(errors.join(", "));
 		})
 		.always(() => {
 			checkIsLoggedIn();
@@ -310,3 +310,69 @@ const generateFood = (e) => {
 		})
 		.fail((err) => console.log(err));
 };
+
+function onSignUp(googleUser) {
+	const id_token = googleUser.getAuthResponse().id_token;
+  $.ajax({
+    method: 'POST',
+    url: 'http://localhost:3000/googleregister',
+    data: {
+      google_token: id_token
+    }
+  })
+    .done((data) => {
+      const { access_token } = data;
+			localStorage.setItem('access_token', access_token);
+			$('#firstNameRegister').val("")
+			$('#lastNameRegister').val("")
+      $('#emailRegister').val("")
+      $('#passwordRegister').val("");
+      checkIsLoggedIn();
+      // Toastify({
+      //   text: "Successfully Sign up with Google",
+      //   duration: 2000,
+      //   backgroundColor: "#07bc0c",
+      // }).showToast();
+    })
+    .fail((err) => {
+      const errors = err.responseJSON.errorMessages;
+      // swal("Registration Failed", errors.join(', '), "error");
+    })
+}
+
+function onSignIn(googleUser) {
+  const id_token = googleUser.getAuthResponse().id_token;
+
+  $.ajax({
+    method: 'POST',
+    url: 'http://localhost:3000/googlesignin',
+    data: {
+      google_token: id_token
+    }
+  })
+    .done((data) => {
+      const { access_token } = data;
+      localStorage.setItem('access_token', access_token);
+      $('#emailLogin').val("")
+      $('#passwordLogin').val("");
+      // Toastify({
+      //   text: "Successfully Sign in with Google",
+      //   duration: 2000,
+      //   backgroundColor: "#07bc0c",
+      // }).showToast();
+    })
+    .fail((err) => {
+      const errors = err.responseJSON.errorMessages;
+      // swal("Google login failed", errors.join(', '), "error");
+    })
+    .always(() => {
+      checkIsLoggedIn();
+    });
+}
+
+function signOut() {
+  let auth2 = gapi.auth2.getAuthInstance();
+  auth2.signOut().then(function () {
+    console.log('User signed out.');
+  });
+}
