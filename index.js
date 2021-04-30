@@ -1,3 +1,5 @@
+// const baseUrl = "http://localhost:3000";
+const baseUrl = "https://food-random-generator.herokuapp.com";
 $(document).ready(() => {
 	checkIsLoggedIn();
 
@@ -86,11 +88,10 @@ const register = () => {
 	let lastName = $("#lastNameRegister").val();
 	let email = $("#emailRegister").val();
 	let password = $("#passwordRegister").val();
-	console.log(firstName, lastName, email, password);
 
 	$.ajax({
 		method: "POST",
-		url: "http://localhost:3000/register",
+		url: baseUrl + "/register",
 		data: {
 			firstName,
 			lastName,
@@ -98,15 +99,18 @@ const register = () => {
 			password,
 		},
 	})
-		.done(() => {
+		.done((data) => {
+			console.log(data);
 			$("#firstNameRegister").val("");
 			$("#lastNameRegister").val("");
 			$("#emailRegister").val("");
 			$("#passwordRegister").val("");
+			console.log(data);
 			checkIsLoggedIn();
 		})
 		.fail((err) => {
 			const errors = err.responseJSON.errorMessages;
+			console.log(errors);
 			// console.log(errors.join(", "));
 		});
 };
@@ -117,7 +121,7 @@ const login = () => {
 
 	$.ajax({
 		method: "POST",
-		url: "http://localhost:3000/signin",
+		url: baseUrl + "/signin",
 		data: {
 			email,
 			password,
@@ -157,7 +161,7 @@ const addFood = (e) => {
 
 	$.ajax({
 		type: "POST",
-		url: "http://localhost:3000/foods",
+		url: baseUrl + "/foods",
 		headers: {
 			access_token: localStorage.getItem("access_token"),
 		},
@@ -178,7 +182,7 @@ const addFood = (e) => {
 const displayFoods = () => {
 	$.ajax({
 		type: "GET",
-		url: "http://localhost:3000/foods",
+		url: baseUrl + "/foods",
 		headers: {
 			access_token: localStorage.getItem("access_token"),
 		},
@@ -205,7 +209,7 @@ const deleteFood = (e) => {
 
 	$.ajax({
 		type: "DELETE",
-		url: `http://localhost:3000/foods/${foodId}`,
+		url: `https://food-random-generator.herokuapp.com/foods/${foodId}`,
 		headers: {
 			access_token: localStorage.getItem("access_token"),
 		},
@@ -223,7 +227,7 @@ const generateFood = (e) => {
 	if (e) e.preventDefault();
 	$.ajax({
 		type: "GET",
-		url: "http://localhost:3000/foods/random",
+		url: baseUrl + "/foods/random",
 		headers: {
 			access_token: localStorage.getItem("access_token"),
 		},
@@ -237,8 +241,8 @@ const generateFood = (e) => {
 				title,
 				diets,
 			} = data;
-			console.log(analyzedInstructions);
-			console.log(analyzedInstructions[0].steps[0].ingredients[0].name)
+			// console.log(analyzedInstructions);
+			// console.log(analyzedInstructions[0].steps[0].ingredients[0].name);
 			let instructionHtml = "";
 			analyzedInstructions[0].steps.forEach((instruction) => {
 				instructionHtml += `
@@ -250,8 +254,7 @@ const generateFood = (e) => {
 			let ingredients = [];
 			analyzedInstructions[0].steps.forEach((e) => {
 				ingredients.push(`${e.ingredients[0].name}`);
-			})
-			console.log(instructionHtml);
+			});
 			const foodContainer = $("#foodContainer");
 			foodContainer.empty();
 			foodContainer.append(`
@@ -269,10 +272,11 @@ const generateFood = (e) => {
 						<div class="card-body">
 							<h5
 								id="title-val"
+								name="${title}"
 								class="card-title"
 								style="text-align: center; padding-top: 10px; font-weight: 600;"
 							>
-								${title} <br>
+								${title}
 							</h5>
 							<a id="url-val" href="${sourceUrl}" style="text-decoration: none; font-weight: 100 !important; font-size: small;">${sourceUrl}</a>
 							<div class="card-after-title">
@@ -298,7 +302,7 @@ const generateFood = (e) => {
 										Ingredients:
 										<!-- ambil name ingredients dari tiap steps nya, di join -->
 										<h6>
-											${ingredients.join(', ')}
+											${ingredients.join(", ")}
 										</h6>
 									</label>
 								</div>
@@ -327,92 +331,94 @@ const generateFood = (e) => {
 };
 
 const sendFood = () => {
-	const title = $('#title-val');
-	const food_url = $('#url-val');
+	const title = $("#title-val");
+	const food_url = $("#url-val");
 
-	console.log(title, food_url);
+	console.log(title.attr("name"), food_url.attr("href"));
 
 	$.ajax({
-		method: 'POST',
-		url: 'http://localhost:3000/foods/sendfood',
+		method: "POST",
+		url: baseUrl + "/foods/sendfood",
 		headers: {
-			access_token: localStorage.getItem("access_token")
+			access_token: localStorage.getItem("access_token"),
 		},
 		data: {
 			title: title.val(),
 			food_url: food_url.attr("href"),
-		}
+		},
 	})
-	.done(() => {
-		console.log('berhasil');
-	})
-	.fail(err => {
-		console.log(err);
-	})
-}
+		.done((data) => {
+			console.log(title.val());
+			console.log(data);
+			console.log("berhasil");
+		})
+		.fail((err) => {
+			console.log(err);
+		});
+};
 
 function onSignUp(googleUser) {
 	const id_token = googleUser.getAuthResponse().id_token;
-  $.ajax({
-    method: 'POST',
-    url: 'http://localhost:3000/googleregister',
-    data: {
-      google_token: id_token
-    }
-  })
-    .done((data) => {
-      const { access_token } = data;
-			localStorage.setItem('access_token', access_token);
-			$('#firstNameRegister').val("")
-			$('#lastNameRegister').val("")
-      $('#emailRegister').val("")
-      $('#passwordRegister').val("");
-      checkIsLoggedIn();
-      // Toastify({
-      //   text: "Successfully Sign up with Google",
-      //   duration: 2000,
-      //   backgroundColor: "#07bc0c",
-      // }).showToast();
-    })
-    .fail((err) => {
-      const errors = err.responseJSON.errorMessages;
-      // swal("Registration Failed", errors.join(', '), "error");
-    })
+	$.ajax({
+		method: "POST",
+		url: baseUrl + "/googleregister",
+		data: {
+			google_token: id_token,
+		},
+	})
+		.done((data) => {
+			const { access_token } = data;
+			localStorage.setItem("access_token", access_token);
+			$("#firstNameRegister").val("");
+			$("#lastNameRegister").val("");
+			$("#emailRegister").val("");
+			$("#passwordRegister").val("");
+			checkIsLoggedIn();
+			// Toastify({
+			//   text: "Successfully Sign up with Google",
+			//   duration: 2000,
+			//   backgroundColor: "#07bc0c",
+			// }).showToast();
+		})
+		.fail((err) => {
+			const errors = err.responseJSON.errorMessages;
+			// swal("Registration Failed", errors.join(', '), "error");
+		});
 }
 
 function onSignIn(googleUser) {
-  const id_token = googleUser.getAuthResponse().id_token;
+	const id_token = googleUser.getAuthResponse().id_token;
 
-  $.ajax({
-    method: 'POST',
-    url: 'http://localhost:3000/googlesignin',
-    data: {
-      google_token: id_token
-    }
-  })
-    .done((data) => {
-      const { access_token } = data;
-      localStorage.setItem('access_token', access_token);
-      $('#emailLogin').val("")
-      $('#passwordLogin').val("");
-      // Toastify({
-      //   text: "Successfully Sign in with Google",
-      //   duration: 2000,
-      //   backgroundColor: "#07bc0c",
-      // }).showToast();
-    })
-    .fail((err) => {
-      const errors = err.responseJSON.errorMessages;
-      // swal("Google login failed", errors.join(', '), "error");
-    })
-    .always(() => {
-      checkIsLoggedIn();
-    });
+	$.ajax({
+		method: "POST",
+		url: baseUrl + "/googlesignin",
+		data: {
+			google_token: id_token,
+		},
+	})
+		.done((data) => {
+			const { access_token } = data;
+			localStorage.setItem("access_token", access_token);
+			$("#emailLogin").val("");
+			$("#passwordLogin").val("");
+			// Toastify({
+			//   text: "Successfully Sign in with Google",
+			//   duration: 2000,
+			//   backgroundColor: "#07bc0c",
+			// }).showToast();
+		})
+		.fail((err) => {
+			const errors = err.responseJSON.errorMessages;
+			// swal("Google login failed", errors.join(', '), "error");
+		})
+		.always(() => {
+			checkIsLoggedIn();
+		});
 }
 
 function signOut() {
-  let auth2 = gapi.auth2.getAuthInstance();
-  auth2.signOut().then(function () {
-    console.log('User signed out.');
-  });
+	let auth2 = gapi.auth2.getAuthInstance();
+	auth2.signOut().then(function () {
+		console.log("User signed out.");
+	});
 }
